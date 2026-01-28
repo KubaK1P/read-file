@@ -1,3 +1,13 @@
+string filepath = "data.txt";
+string text = "no file at " + filepath;
+
+// im so extra with the error handling here
+try
+{
+    text = File.ReadAllText(filepath);
+}
+catch (System.Exception) { }
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +29,13 @@ app.MapGet(
     }
 );
 
-app.MapGet("/file", () => { });
+// return file data here
+app.MapGet(
+    "/file",
+    () =>
+    {
+        return new FileContent(text);
+    }
+);
 app.UseHttpsRedirection();
 app.Run();
